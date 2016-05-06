@@ -1,0 +1,51 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "24.0.0 rc3"
+
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.google.code.gson:gson:2.6.2'
+}
+apply plugin: 'maven'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            snapshotRepository(url: 'http://115.159.72.206:8081/nexus/content/repositories/carilibrary/') {
+                authentication(userName: 'deployment', password: 'a@1.com')
+            }
+            repository(url: 'http://115.159.72.206:8081/nexus/content/repositories/carilibrary/') {
+                authentication(userName: 'deployment', password: 'a@1.com')
+            }
+            pom.project {
+                version '1.0.0'
+                artifactId 'carilibrary'
+                groupId 'cn.com.cari'
+                packaging 'aar'
+                description 'CariLibrary'
+            }
+        }
+    }
+}
+//
